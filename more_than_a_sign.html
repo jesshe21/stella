@@ -218,13 +218,25 @@
     .select {
       appearance: none;
       cursor: pointer;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234a4a4a' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23a8b5a0' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 14px center;
       color: var(--soft);
+      font-weight: 400;
     }
 
     .select:valid {
+      color: var(--charcoal);
+      font-weight: 400;
+    }
+
+    .select:focus {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238a9682' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    }
+
+    .select option {
+      padding: 12px;
+      background: var(--cream);
       color: var(--charcoal);
     }
 
@@ -457,6 +469,7 @@
       padding: 12px 14px;
       box-shadow: 0 12px 32px rgba(45,45,45,.08);
       animation: floatCard 5s ease-in-out infinite;
+      z-index: 10;
     }
 
     .float-card-1 {
@@ -517,8 +530,18 @@
       <a class="brand" href="#">
         <div class="mark">
           <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 4C10.268 4 4 10.268 4 18C4 25.732 10.268 32 18 32C19.5 32 20.95 31.77 22.31 31.35C19.04 29.42 16.85 25.95 16.85 22C16.85 15.65 22.05 10.45 28.4 10.45C29.15 10.45 29.88 10.52 30.58 10.65C28.42 6.68 24.03 4 18 4Z" fill="#a8b5a0"/>
-            <path d="M28 14L28.75 16.25L31 17L28.75 17.75L28 20L27.25 17.75L25 17L27.25 16.25L28 14Z" fill="#c9a962"/>
+            <defs>
+              <linearGradient id="crescentGradient" x1="10" y1="8" x2="26" y2="28">
+                <stop offset="0%" stop-color="#c4d0bc"/>
+                <stop offset="100%" stop-color="#8a9682"/>
+              </linearGradient>
+              <linearGradient id="starGradient" x1="26" y1="14" x2="30" y2="19">
+                <stop offset="0%" stop-color="#e0c576"/>
+                <stop offset="100%" stop-color="#b89550"/>
+              </linearGradient>
+            </defs>
+            <path d="M18 4C10.268 4 4 10.268 4 18C4 25.732 10.268 32 18 32C19.5 32 20.95 31.77 22.31 31.35C19.04 29.42 16.85 25.95 16.85 22C16.85 15.65 22.05 10.45 28.4 10.45C29.15 10.45 29.88 10.52 30.58 10.65C28.42 6.68 24.03 4 18 4Z" fill="url(#crescentGradient)"/>
+            <path d="M28 14L28.75 16.25L31 17L28.75 17.75L28 20L27.25 17.75L25 17L27.25 16.25L28 14Z" fill="url(#starGradient)"/>
           </svg>
         </div>
         <div class="wordmark">Stella</div>
@@ -540,19 +563,19 @@
         <div class="cta-card">
           <form id="signup-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
             <select name="sign" class="field select" required>
-              <option value="" disabled selected>Your sign</option>
-              <option value="aries">♈ Aries (Mar 21 – Apr 19)</option>
-              <option value="taurus">♉ Taurus (Apr 20 – May 20)</option>
-              <option value="gemini">♊ Gemini (May 21 – Jun 20)</option>
-              <option value="cancer">♋ Cancer (Jun 21 – Jul 22)</option>
-              <option value="leo">♌ Leo (Jul 23 – Aug 22)</option>
-              <option value="virgo">♍ Virgo (Aug 23 – Sep 22)</option>
-              <option value="libra">♎ Libra (Sep 23 – Oct 22)</option>
-              <option value="scorpio">♏ Scorpio (Oct 23 – Nov 21)</option>
-              <option value="sagittarius">♐ Sagittarius (Nov 22 – Dec 21)</option>
-              <option value="capricorn">♑ Capricorn (Dec 22 – Jan 19)</option>
-              <option value="aquarius">♒ Aquarius (Jan 20 – Feb 18)</option>
-              <option value="pisces">♓ Pisces (Feb 19 – Mar 20)</option>
+              <option value="" disabled selected>Your sun sign</option>
+              <option value="capricorn">♑︎ Capricorn (Dec 22 – Jan 19)</option>
+              <option value="aquarius">♒︎ Aquarius (Jan 20 – Feb 18)</option>
+              <option value="pisces">♓︎ Pisces (Feb 19 – Mar 20)</option>
+              <option value="aries">♈︎ Aries (Mar 21 – Apr 19)</option>
+              <option value="taurus">♉︎ Taurus (Apr 20 – May 20)</option>
+              <option value="gemini">♊︎ Gemini (May 21 – Jun 20)</option>
+              <option value="cancer">♋︎ Cancer (Jun 21 – Jul 22)</option>
+              <option value="leo">♌︎ Leo (Jul 23 – Aug 22)</option>
+              <option value="virgo">♍︎ Virgo (Aug 23 – Sep 22)</option>
+              <option value="libra">♎︎ Libra (Sep 23 – Oct 22)</option>
+              <option value="scorpio">♏︎ Scorpio (Oct 23 – Nov 21)</option>
+              <option value="sagittarius">♐︎ Sagittarius (Nov 22 – Dec 21)</option>
             </select>
             <div class="manifestation-wrap">
               <label class="field-label">What do you want to manifest?</label>
@@ -590,8 +613,18 @@
             <div class="screen-inner">
               <div class="screen-logo">
                 <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M18 4C10.268 4 4 10.268 4 18C4 25.732 10.268 32 18 32C19.5 32 20.95 31.77 22.31 31.35C19.04 29.42 16.85 25.95 16.85 22C16.85 15.65 22.05 10.45 28.4 10.45C29.15 10.45 29.88 10.52 30.58 10.65C28.42 6.68 24.03 4 18 4Z" fill="#a8b5a0"/>
-                  <path d="M28 14L28.75 16.25L31 17L28.75 17.75L28 20L27.25 17.75L25 17L27.25 16.25L28 14Z" fill="#c9a962"/>
+                  <defs>
+                    <linearGradient id="screenCrescentGradient" x1="10" y1="8" x2="26" y2="28">
+                      <stop offset="0%" stop-color="#c4d0bc"/>
+                      <stop offset="100%" stop-color="#8a9682"/>
+                    </linearGradient>
+                    <linearGradient id="screenStarGradient" x1="26" y1="14" x2="30" y2="19">
+                      <stop offset="0%" stop-color="#e0c576"/>
+                      <stop offset="100%" stop-color="#b89550"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M18 4C10.268 4 4 10.268 4 18C4 25.732 10.268 32 18 32C19.5 32 20.95 31.77 22.31 31.35C19.04 29.42 16.85 25.95 16.85 22C16.85 15.65 22.05 10.45 28.4 10.45C29.15 10.45 29.88 10.52 30.58 10.65C28.42 6.68 24.03 4 18 4Z" fill="url(#screenCrescentGradient)"/>
+                  <path d="M28 14L28.75 16.25L31 17L28.75 17.75L28 20L27.25 17.75L25 17L27.25 16.25L28 14Z" fill="url(#screenStarGradient)"/>
                 </svg>
               </div>
               <div class="screen-title">Stella</div>
@@ -639,7 +672,7 @@
       }, 300);
     }
     
-    setInterval(rotatePlaceholder, 3000);
+    setInterval(rotatePlaceholder, 2000);
     
     // Hide placeholder when typing
     manifestInput.addEventListener('input', function() {
