@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Luna — Find Your Practitioner</title>
+  <title>Stella — Find Your Practitioner</title>
   <meta name="description" content="Tarot readers, energy healers, and ritual workers matched to your chart.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -80,12 +80,13 @@
     .mark {
       width: 34px;
       height: 34px;
-      border-radius: 12px;
-      background: linear-gradient(145deg, var(--sage) 0%, var(--gold) 120%);
-      box-shadow: 0 8px 20px rgba(45,45,45,.08);
       display: grid;
       place-items: center;
-      font-size: 15px;
+    }
+
+    .mark svg {
+      width: 100%;
+      height: 100%;
     }
 
     .wordmark {
@@ -440,8 +441,25 @@
   <div class="wrap">
     <div class="top">
       <a class="brand" href="#">
-        <div class="mark">🌙</div>
-        <div class="wordmark">Luna</div>
+        <div class="mark">
+          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="crescentInnerGlow" cx="35%" cy="35%" r="65%" fx="30%" fy="30%">
+                <stop offset="0%" stop-color="#d4dccf"/>
+                <stop offset="40%" stop-color="#b8c4b0"/>
+                <stop offset="100%" stop-color="#7d8a74"/>
+              </radialGradient>
+              <radialGradient id="starInnerGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#e8d9a0"/>
+                <stop offset="60%" stop-color="#c9a962"/>
+                <stop offset="100%" stop-color="#b89a55"/>
+              </radialGradient>
+            </defs>
+            <path d="M18 4C10.268 4 4 10.268 4 18C4 25.732 10.268 32 18 32C19.5 32 20.95 31.77 22.31 31.35C19.04 29.42 16.85 25.95 16.85 22C16.85 15.65 22.05 10.45 28.4 10.45C29.15 10.45 29.88 10.52 30.58 10.65C28.42 6.68 24.03 4 18 4Z" fill="url(#crescentInnerGlow)"/>
+            <path d="M28 14L28.75 16.25L31 17L28.75 17.75L28 20L27.25 17.75L25 17L27.25 16.25L28 14Z" fill="url(#starInnerGlow)"/>
+          </svg>
+        </div>
+        <div class="wordmark">Stella</div>
       </a>
       <div class="pill">Coming Soon</div>
     </div>
@@ -525,7 +543,7 @@
       </div>
     </div>
 
-    <footer>© 2026 Luna</footer>
+    <footer>© 2026 Stella</footer>
   </div>
 
   <script>
