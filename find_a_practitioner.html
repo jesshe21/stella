@@ -433,6 +433,100 @@
       color: var(--soft);
       opacity: .5;
     }
+
+    /* Success State */
+    .success { display: none; text-align: center; padding: 20px 0; }
+    .success.show { display: flex; flex-direction: column; align-items: center; }
+    form.hidden { display: none; }
+
+    /* Star Constellation */
+    .constellation-container {
+      width: 200px;
+      height: 160px;
+      position: relative;
+      margin: 0 auto 24px;
+    }
+
+    .constellation-svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .star-point {
+      fill: var(--gold);
+      opacity: 0;
+      animation: starAppear 0.5s ease forwards;
+    }
+
+    .star-point:nth-child(1) { animation-delay: 0.2s; }
+    .star-point:nth-child(2) { animation-delay: 0.5s; }
+    .star-point:nth-child(3) { animation-delay: 0.8s; }
+    .star-point:nth-child(4) { animation-delay: 1.1s; }
+    .star-point:nth-child(5) { animation-delay: 1.4s; }
+
+    @keyframes starAppear {
+      0% { opacity: 0; transform: scale(0); }
+      50% { opacity: 1; transform: scale(1.3); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .constellation-line {
+      stroke: var(--gold);
+      stroke-width: 1.5;
+      fill: none;
+      opacity: 0.6;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      animation: drawLine 0.6s ease forwards;
+    }
+
+    .constellation-line:nth-of-type(1) { animation-delay: 0.6s; }
+    .constellation-line:nth-of-type(2) { animation-delay: 0.9s; }
+    .constellation-line:nth-of-type(3) { animation-delay: 1.2s; }
+    .constellation-line:nth-of-type(4) { animation-delay: 1.5s; }
+
+    @keyframes drawLine {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .star-glow {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(201,169,98,.15) 0%, transparent 50%);
+      opacity: 0;
+      animation: glowPulse 2s ease-in-out infinite;
+      animation-delay: 1.8s;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.6; }
+    }
+
+    .success h2 {
+      font-family: "Fraunces", serif;
+      font-size: 24px;
+      font-weight: 300;
+      margin-bottom: 8px;
+      color: var(--charcoal);
+    }
+
+    .success p {
+      color: var(--soft);
+      font-size: 14px;
+    }
+
+    .success .whimsy {
+      font-family: "Fraunces", serif;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--plum);
+      margin-top: 12px;
+      opacity: 0.8;
+    }
   </style>
 </head>
 <body>
@@ -489,6 +583,28 @@
             <button type="submit" class="btn">Join the Waitlist</button>
             <p class="fine">We'll match you when we launch</p>
           </form>
+
+          <div class="success" id="success">
+            <div class="constellation-container">
+              <div class="star-glow"></div>
+              <svg class="constellation-svg" viewBox="0 0 200 160">
+                <!-- Lines connecting stars -->
+                <path class="constellation-line" d="M 40 40 L 100 20" />
+                <path class="constellation-line" d="M 100 20 L 160 50" />
+                <path class="constellation-line" d="M 160 50 L 120 100" />
+                <path class="constellation-line" d="M 120 100 L 60 120" />
+                <!-- Stars -->
+                <circle class="star-point" cx="40" cy="40" r="4" />
+                <circle class="star-point" cx="100" cy="20" r="5" />
+                <circle class="star-point" cx="160" cy="50" r="4" />
+                <circle class="star-point" cx="120" cy="100" r="4" />
+                <circle class="star-point" cx="60" cy="120" r="3" />
+              </svg>
+            </div>
+            <h2>You're in ✨</h2>
+            <p>Your constellation is forming.</p>
+            <p class="whimsy">We'll find your perfect match when we launch.</p>
+          </div>
         </div>
       </div>
 
@@ -593,6 +709,17 @@
       } else {
         this.classList.remove('has-value');
       }
+    });
+
+    // Form submission
+    document.getElementById('signup-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      this.classList.add('hidden');
+      document.getElementById('success').classList.add('show');
+
+      // Here you would normally submit to your form backend
+      // fetch(this.action, { method: 'POST', body: new FormData(this) });
     });
   </script>
 </body>

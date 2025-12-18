@@ -310,8 +310,92 @@
 
     /* Success */
     .success { display: none; text-align: center; padding: 12px 0; }
-    .success.show { display: block; }
+    .success.show { display: flex; flex-direction: column; align-items: center; }
     form.hidden { display: none; }
+
+    /* Tarot Card */
+    .tarot-container {
+      perspective: 1000px;
+      width: 180px;
+      height: 260px;
+      margin: 0 auto 20px;
+    }
+
+    .tarot-card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s ease;
+    }
+
+    .tarot-card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .tarot-front, .tarot-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-shadow: 0 8px 32px rgba(45,45,45,.15);
+    }
+
+    .tarot-front {
+      background: linear-gradient(145deg, var(--lilac) 0%, var(--plum) 100%);
+      border: 2px solid rgba(255,255,255,.3);
+    }
+
+    .tarot-front::before {
+      content: '✦';
+      font-size: 48px;
+      color: rgba(255,255,255,.6);
+      animation: twinkle 2s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.1); }
+    }
+
+    .tarot-back {
+      background: linear-gradient(180deg, var(--cream) 0%, var(--lavender) 100%);
+      border: 2px solid var(--line);
+      transform: rotateY(180deg);
+      text-align: center;
+    }
+
+    .tarot-back .card-label {
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--sage2);
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    .tarot-back .card-message {
+      font-family: "Fraunces", serif;
+      font-size: 16px;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--charcoal);
+    }
+
+    .tarot-back .card-message em {
+      color: var(--sage2);
+    }
+
+    .success-text {
+      text-align: center;
+    }
 
     .success h2 {
       font-family: "Fraunces", serif;
@@ -323,6 +407,15 @@
     .success p {
       color: var(--soft);
       font-size: 14px;
+    }
+
+    .success .whimsy {
+      font-family: "Fraunces", serif;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--plum);
+      margin-top: 12px;
+      opacity: 0.8;
     }
 
     /* Phone */
@@ -585,8 +678,20 @@
           </form>
           
           <div class="success" id="success">
-            <h2>You're in ✨</h2>
-            <p>We'll reach out when Stella is ready.</p>
+            <div class="tarot-container">
+              <div class="tarot-card" id="tarot-card">
+                <div class="tarot-front"></div>
+                <div class="tarot-back">
+                  <div class="card-label">Today's Message</div>
+                  <div class="card-message" id="card-message">You don't need the whole plan — just the next <em>yes</em></div>
+                </div>
+              </div>
+            </div>
+            <div class="success-text">
+              <h2>You're in ✨</h2>
+              <p>Consider this your first sign.</p>
+              <p class="whimsy">The stars are aligning... we'll be in touch soon.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -680,12 +785,42 @@
       }
     });
 
+    // Tarot messages based on sign
+    const tarotMessages = {
+      capricorn: "The mountain doesn't rush to the sky. Your steady climb is the <em>magic</em>.",
+      aquarius: "Your different is your superpower. The world needs what only <em>you</em> see.",
+      pisces: "Trust the currents carrying you. What feels like drifting is actually <em>arriving</em>.",
+      aries: "The spark you feel? Follow it. Your instincts are <em>never</em> wrong.",
+      taurus: "Slow down. The abundance you seek is already <em>blooming</em> around you.",
+      gemini: "Both paths are right. You're allowed to be <em>everything</em> you are.",
+      cancer: "Your softness is not weakness — it's your greatest <em>strength</em>.",
+      leo: "Stop dimming. The spotlight finds you for a <em>reason</em>.",
+      virgo: "Release the perfect. What you've already done is <em>enough</em>.",
+      libra: "Stop weighing. Your heart already <em>knows</em>.",
+      scorpio: "Let it go. The transformation waiting for you is <em>beautiful</em>.",
+      sagittarius: "The adventure is closer than you think. Say <em>yes</em>."
+    };
+
+    const defaultMessage = "You don't need the whole plan — just the next <em>yes</em>";
+
     // Form submission
     document.getElementById('signup-form').addEventListener('submit', function(e) {
-      // Uncomment to test:
-      // e.preventDefault();
-      // this.classList.add('hidden');
-      // document.getElementById('success').classList.add('show');
+      e.preventDefault();
+
+      const sign = document.querySelector('select[name="sign"]').value;
+      const message = tarotMessages[sign] || defaultMessage;
+      document.getElementById('card-message').innerHTML = message;
+
+      this.classList.add('hidden');
+      document.getElementById('success').classList.add('show');
+
+      // Flip the card after a short delay
+      setTimeout(() => {
+        document.getElementById('tarot-card').classList.add('flipped');
+      }, 300);
+
+      // Here you would normally submit to your form backend
+      // fetch(this.action, { method: 'POST', body: new FormData(this) });
     });
   </script>
 </body>
