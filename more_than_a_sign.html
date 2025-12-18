@@ -313,88 +313,125 @@
     .success.show { display: flex; flex-direction: column; align-items: center; }
     form.hidden { display: none; }
 
-    /* Tarot Card */
-    .tarot-container {
-      perspective: 1000px;
-      width: 180px;
-      height: 260px;
-      margin: 0 auto 20px;
-    }
-
-    .tarot-card {
-      width: 100%;
-      height: 100%;
+    /* Star Constellation */
+    .constellation-container {
+      width: 220px;
+      height: 180px;
       position: relative;
-      transform-style: preserve-3d;
-      transition: transform 0.8s ease;
+      margin: 0 auto 24px;
     }
 
-    .tarot-card.flipped {
-      transform: rotateY(180deg);
-    }
-
-    .tarot-front, .tarot-back {
-      position: absolute;
+    .constellation-svg {
       width: 100%;
       height: 100%;
-      backface-visibility: hidden;
-      border-radius: 12px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      box-shadow: 0 8px 32px rgba(45,45,45,.15);
+      overflow: visible;
     }
 
-    .tarot-front {
-      background: linear-gradient(145deg, var(--lilac) 0%, var(--plum) 100%);
-      border: 2px solid rgba(255,255,255,.3);
+    /* Main constellation stars */
+    .star-point {
+      fill: var(--gold);
+      opacity: 0;
+      filter: drop-shadow(0 0 3px rgba(201,169,98,.6));
     }
 
-    .tarot-front::before {
-      content: '✦';
-      font-size: 48px;
-      color: rgba(255,255,255,.6);
-      animation: twinkle 2s ease-in-out infinite;
+    .star-point.main {
+      animation: starAppear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    .star-point.main:nth-child(6) { animation-delay: 0.2s; }
+    .star-point.main:nth-child(7) { animation-delay: 0.4s; }
+    .star-point.main:nth-child(8) { animation-delay: 0.6s; }
+    .star-point.main:nth-child(9) { animation-delay: 0.8s; }
+    .star-point.main:nth-child(10) { animation-delay: 1.0s; }
+    .star-point.main:nth-child(11) { animation-delay: 1.2s; }
+
+    /* Twinkling background stars */
+    .star-point.twinkle {
+      animation: twinkleAppear 0.4s ease forwards, twinkle 2s ease-in-out infinite;
+    }
+
+    .star-point.twinkle:nth-child(12) { animation-delay: 1.5s, 1.9s; }
+    .star-point.twinkle:nth-child(13) { animation-delay: 1.7s, 2.1s; }
+    .star-point.twinkle:nth-child(14) { animation-delay: 1.9s, 2.3s; }
+    .star-point.twinkle:nth-child(15) { animation-delay: 2.1s, 2.5s; }
+    .star-point.twinkle:nth-child(16) { animation-delay: 2.3s, 2.7s; }
+    .star-point.twinkle:nth-child(17) { animation-delay: 2.5s, 2.9s; }
+
+    @keyframes starAppear {
+      0% { opacity: 0; transform: scale(0) rotate(0deg); }
+      60% { opacity: 1; transform: scale(1.4) rotate(180deg); }
+      100% { opacity: 1; transform: scale(1) rotate(360deg); }
+    }
+
+    @keyframes twinkleAppear {
+      0% { opacity: 0; transform: scale(0); }
+      100% { opacity: 0.6; transform: scale(1); }
     }
 
     @keyframes twinkle {
+      0%, 100% { opacity: 0.3; transform: scale(0.8); }
+      50% { opacity: 0.8; transform: scale(1.2); }
+    }
+
+    /* Constellation lines */
+    .constellation-line {
+      stroke: url(#lineGradient);
+      stroke-width: 1.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-dasharray: 150;
+      stroke-dashoffset: 150;
+      animation: drawLine 0.8s ease forwards;
+      filter: drop-shadow(0 0 2px rgba(201,169,98,.4));
+    }
+
+    .constellation-line:nth-of-type(1) { animation-delay: 0.5s; }
+    .constellation-line:nth-of-type(2) { animation-delay: 0.7s; }
+    .constellation-line:nth-of-type(3) { animation-delay: 0.9s; }
+    .constellation-line:nth-of-type(4) { animation-delay: 1.1s; }
+    .constellation-line:nth-of-type(5) { animation-delay: 1.3s; }
+
+    @keyframes drawLine {
+      to { stroke-dashoffset: 0; }
+    }
+
+    /* Center glow */
+    .star-glow {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(201,169,98,.2) 0%, rgba(216,210,228,.1) 40%, transparent 70%);
+      opacity: 0;
+      animation: glowPulse 3s ease-in-out infinite;
+      animation-delay: 1.8s;
+    }
+
+    @keyframes glowPulse {
       0%, 100% { opacity: 0.4; transform: scale(1); }
-      50% { opacity: 0.8; transform: scale(1.1); }
+      50% { opacity: 0.8; transform: scale(1.05); }
     }
 
-    .tarot-back {
-      background: linear-gradient(180deg, var(--cream) 0%, var(--lavender) 100%);
-      border: 2px solid var(--line);
-      transform: rotateY(180deg);
-      text-align: center;
+    /* Sparkle effect */
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--gold);
+      border-radius: 50%;
+      opacity: 0;
+      animation: sparkle 1.5s ease-in-out infinite;
     }
 
-    .tarot-back .card-label {
-      font-size: 9px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--sage2);
-      margin-bottom: 12px;
-      font-weight: 500;
-    }
+    .sparkle:nth-child(1) { top: 20%; left: 15%; animation-delay: 2s; }
+    .sparkle:nth-child(2) { top: 70%; left: 80%; animation-delay: 2.3s; }
+    .sparkle:nth-child(3) { top: 40%; left: 90%; animation-delay: 2.6s; }
+    .sparkle:nth-child(4) { top: 85%; left: 25%; animation-delay: 2.9s; }
 
-    .tarot-back .card-message {
-      font-family: "Fraunces", serif;
-      font-size: 16px;
-      font-weight: 300;
-      font-style: italic;
-      line-height: 1.5;
-      color: var(--charcoal);
-    }
-
-    .tarot-back .card-message em {
-      color: var(--sage2);
-    }
-
-    .success-text {
-      text-align: center;
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0); }
+      50% { opacity: 1; transform: scale(1); }
     }
 
     .success h2 {
@@ -402,6 +439,7 @@
       font-size: 24px;
       font-weight: 300;
       margin-bottom: 8px;
+      color: var(--charcoal);
     }
 
     .success p {
@@ -678,20 +716,26 @@
           </form>
           
           <div class="success" id="success">
-            <div class="tarot-container">
-              <div class="tarot-card" id="tarot-card">
-                <div class="tarot-front"></div>
-                <div class="tarot-back">
-                  <div class="card-label">Today's Message</div>
-                  <div class="card-message" id="card-message">You don't need the whole plan — just the next <em>yes</em></div>
-                </div>
-              </div>
+            <div class="constellation-container">
+              <div class="star-glow"></div>
+              <div class="sparkle"></div>
+              <div class="sparkle"></div>
+              <div class="sparkle"></div>
+              <div class="sparkle"></div>
+              <svg class="constellation-svg" id="constellation-svg" viewBox="0 0 220 180">
+                <defs>
+                  <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#c9a962" stop-opacity="0.8"/>
+                    <stop offset="50%" stop-color="#d8d2e4" stop-opacity="0.6"/>
+                    <stop offset="100%" stop-color="#c9a962" stop-opacity="0.8"/>
+                  </linearGradient>
+                </defs>
+                <!-- Constellation will be dynamically inserted here -->
+              </svg>
             </div>
-            <div class="success-text">
-              <h2>You're in ✨</h2>
-              <p>Consider this your first sign.</p>
-              <p class="whimsy">The stars are aligning... we'll be in touch soon.</p>
-            </div>
+            <h2>You're in ✨</h2>
+            <p id="constellation-name">Your constellation is forming.</p>
+            <p class="whimsy">The stars are aligning... we'll be in touch soon.</p>
           </div>
         </div>
       </div>
@@ -785,39 +829,137 @@
       }
     });
 
-    // Tarot messages based on sign
-    const tarotMessages = {
-      capricorn: "The mountain doesn't rush to the sky. Your steady climb is the <em>magic</em>.",
-      aquarius: "Your different is your superpower. The world needs what only <em>you</em> see.",
-      pisces: "Trust the currents carrying you. What feels like drifting is actually <em>arriving</em>.",
-      aries: "The spark you feel? Follow it. Your instincts are <em>never</em> wrong.",
-      taurus: "Slow down. The abundance you seek is already <em>blooming</em> around you.",
-      gemini: "Both paths are right. You're allowed to be <em>everything</em> you are.",
-      cancer: "Your softness is not weakness — it's your greatest <em>strength</em>.",
-      leo: "Stop dimming. The spotlight finds you for a <em>reason</em>.",
-      virgo: "Release the perfect. What you've already done is <em>enough</em>.",
-      libra: "Stop weighing. Your heart already <em>knows</em>.",
-      scorpio: "Let it go. The transformation waiting for you is <em>beautiful</em>.",
-      sagittarius: "The adventure is closer than you think. Say <em>yes</em>."
+    // Zodiac symbol data - drawing the actual zodiac glyphs with stars
+    const constellations = {
+      aries: {
+        name: "Aries rises for you",
+        // ♈ Ram horns - two curved lines meeting at bottom
+        stars: [[50,30,5], [35,60,4], [50,90,6], [65,60,4], [80,30,5], [110,90,7], [140,60,5], [170,90,5]],
+        lines: ["M 50 30 Q 25 60 50 90", "M 80 30 Q 105 60 50 90", "M 110 90 Q 140 30 170 90"]
+      },
+      taurus: {
+        name: "Taurus shines bright",
+        // ♉ Circle with horns on top
+        stars: [[110,95,7], [70,95,5], [150,95,5], [110,130,5], [110,60,5], [60,35,5], [80,55,4], [140,55,4], [160,35,5]],
+        lines: ["M 70 95 A 40 40 0 1 1 150 95", "M 150 95 A 40 40 0 1 1 70 95", "M 80 55 L 60 35", "M 140 55 L 160 35"]
+      },
+      gemini: {
+        name: "Gemini twins align",
+        // ♊ Two vertical lines with curves top and bottom
+        stars: [[70,35,5], [110,25,6], [150,35,5], [70,90,5], [150,90,5], [70,145,5], [110,155,6], [150,145,5]],
+        lines: ["M 70 35 Q 110 15 150 35", "M 70 145 Q 110 165 150 145", "M 70 35 L 70 145", "M 150 35 L 150 145"]
+      },
+      cancer: {
+        name: "Cancer guides your path",
+        // ♋ Two interlocking 6 and 9 shapes
+        stars: [[60,55,6], [95,40,5], [60,85,4], [160,125,6], [125,140,5], [160,95,4]],
+        lines: ["M 95 40 A 35 35 0 1 0 60 85", "M 60 55 A 15 15 0 1 1 75 70", "M 125 140 A 35 35 0 1 0 160 95", "M 160 125 A 15 15 0 1 1 145 110"]
+      },
+      leo: {
+        name: "Leo roars for you",
+        // ♌ Loop with curved tail
+        stars: [[55,120,6], [55,80,5], [75,60,5], [100,70,5], [100,100,4], [80,115,4], [130,130,5], [160,110,5], [180,130,4]],
+        lines: ["M 55 120 A 30 30 0 1 1 100 100", "M 100 100 Q 80 120 80 115", "M 55 120 Q 100 150 130 130", "M 130 130 Q 150 120 160 110", "M 160 110 Q 175 100 180 130"]
+      },
+      virgo: {
+        name: "Virgo watches over you",
+        // ♍ M with loop on right
+        stars: [[40,140,5], [40,50,5], [70,90,4], [70,50,5], [100,90,4], [100,50,5], [130,90,5], [130,140,5], [160,120,6], [175,140,4]],
+        lines: ["M 40 140 L 40 50", "M 40 50 L 70 90", "M 70 90 L 70 50", "M 70 50 L 100 90", "M 100 90 L 100 50", "M 100 50 L 130 90", "M 130 90 L 130 140", "M 130 140 Q 170 140 160 120", "M 160 120 Q 150 100 175 140"]
+      },
+      libra: {
+        name: "Libra finds your balance",
+        // ♎ Scales - horizontal line with sunrise shape above
+        stars: [[40,130,5], [180,130,6], [40,100,4], [180,100,4], [110,100,5], [110,60,6], [70,80,4], [150,80,4]],
+        lines: ["M 40 130 L 180 130", "M 40 100 L 180 100", "M 110 100 L 110 60", "M 70 80 Q 110 40 150 80"]
+      },
+      scorpio: {
+        name: "Scorpio transforms you",
+        // ♏ M with arrow tail pointing up-right
+        stars: [[40,140,5], [40,50,5], [70,90,4], [70,50,5], [100,90,4], [100,50,5], [130,90,5], [130,140,5], [160,115,5], [175,95,6], [185,105,4], [175,115,4]],
+        lines: ["M 40 140 L 40 50", "M 40 50 L 70 90", "M 70 90 L 70 50", "M 70 50 L 100 90", "M 100 90 L 100 50", "M 100 50 L 130 90", "M 130 90 L 130 140", "M 130 140 L 160 115", "M 160 115 L 175 95", "M 175 95 L 185 105", "M 175 95 L 175 115"]
+      },
+      sagittarius: {
+        name: "Sagittarius aims true",
+        // ♐ Arrow pointing up-right
+        stars: [[50,150,5], [170,30,7], [170,60,5], [140,30,5], [155,45,4]],
+        lines: ["M 50 150 L 170 30", "M 170 30 L 170 60", "M 170 30 L 140 30", "M 130 80 L 90 120"]
+      },
+      capricorn: {
+        name: "Capricorn ascends",
+        // ♑ V with looped tail
+        stars: [[40,50,5], [80,100,6], [80,50,5], [120,70,5], [150,50,4], [160,80,5], [140,110,5], [160,140,5], [180,130,4]],
+        lines: ["M 40 50 L 80 100", "M 80 100 L 80 50", "M 80 50 Q 120 40 120 70", "M 120 70 Q 120 100 140 110", "M 140 110 Q 180 110 160 140", "M 160 140 Q 140 160 180 130"]
+      },
+      aquarius: {
+        name: "Aquarius flows for you",
+        // ♒ Two wavy parallel lines
+        stars: [[40,60,5], [80,45,5], [120,60,5], [160,45,5], [200,60,4], [40,110,5], [80,95,5], [120,110,5], [160,95,5], [200,110,4]],
+        lines: ["M 40 60 Q 60 40 80 45", "M 80 45 Q 100 50 120 60", "M 120 60 Q 140 70 160 45", "M 160 45 Q 180 30 200 60", "M 40 110 Q 60 90 80 95", "M 80 95 Q 100 100 120 110", "M 120 110 Q 140 120 160 95", "M 160 95 Q 180 80 200 110"]
+      },
+      pisces: {
+        name: "Pisces swims to you",
+        // ♓ Two curved fish shapes with horizontal line
+        stars: [[50,40,5], [30,75,6], [50,110,5], [170,40,5], [190,75,6], [170,110,5], [30,75,4], [190,75,4], [110,75,5]],
+        lines: ["M 50 40 Q 70 75 50 110", "M 50 40 Q 20 75 50 110", "M 170 40 Q 150 75 170 110", "M 170 40 Q 200 75 170 110", "M 30 75 L 190 75"]
+      }
     };
 
-    const defaultMessage = "You don't need the whole plan — just the next <em>yes</em>";
+    // Twinkling background stars (same for all)
+    const twinkleStars = [[20,30,2], [200,40,1.5], [160,150,2], [45,150,1.5], [180,120,2]];
+
+    function renderConstellation(sign) {
+      const svg = document.getElementById('constellation-svg');
+      const data = constellations[sign] || constellations.aries;
+
+      // Keep the defs, clear the rest
+      const defs = svg.querySelector('defs').outerHTML;
+      svg.innerHTML = defs;
+
+      // Add lines
+      data.lines.forEach((d, i) => {
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('class', 'constellation-line');
+        path.setAttribute('d', d);
+        path.style.animationDelay = `${0.5 + i * 0.2}s`;
+        svg.appendChild(path);
+      });
+
+      // Add main stars
+      data.stars.forEach((star, i) => {
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('class', 'star-point main');
+        circle.setAttribute('cx', star[0]);
+        circle.setAttribute('cy', star[1]);
+        circle.setAttribute('r', star[2]);
+        circle.style.animationDelay = `${0.2 + i * 0.15}s`;
+        svg.appendChild(circle);
+      });
+
+      // Add twinkle stars
+      twinkleStars.forEach((star, i) => {
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('class', 'star-point twinkle');
+        circle.setAttribute('cx', star[0]);
+        circle.setAttribute('cy', star[1]);
+        circle.setAttribute('r', star[2]);
+        circle.style.animationDelay = `${1.5 + i * 0.2}s, ${1.9 + i * 0.2}s`;
+        svg.appendChild(circle);
+      });
+
+      // Update constellation name
+      document.getElementById('constellation-name').textContent = data.name;
+    }
 
     // Form submission
     document.getElementById('signup-form').addEventListener('submit', function(e) {
       e.preventDefault();
 
       const sign = document.querySelector('select[name="sign"]').value;
-      const message = tarotMessages[sign] || defaultMessage;
-      document.getElementById('card-message').innerHTML = message;
+      renderConstellation(sign);
 
       this.classList.add('hidden');
       document.getElementById('success').classList.add('show');
-
-      // Flip the card after a short delay
-      setTimeout(() => {
-        document.getElementById('tarot-card').classList.add('flipped');
-      }, 300);
 
       // Here you would normally submit to your form backend
       // fetch(this.action, { method: 'POST', body: new FormData(this) });
