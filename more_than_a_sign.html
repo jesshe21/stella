@@ -688,7 +688,7 @@
 
         <div class="cta-card">
           <form id="signup-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-            <select name="sign" class="field select" required>
+            <select name="entry.172177064" class="field select" required>
               <option value="" disabled selected>Your sun sign</option>
               <option value="capricorn">♑︎ Capricorn (Dec 22 – Jan 19)</option>
               <option value="aquarius">♒︎ Aquarius (Jan 20 – Feb 18)</option>
@@ -706,11 +706,11 @@
             <div class="manifestation-wrap">
               <label class="field-label">What do you want to manifest?</label>
               <div class="input-wrap">
-                <input type="text" name="manifestation" id="manifestation" class="field" required>
+                <input type="text" name="entry.49964060" id="manifestation" class="field" required>
                 <span class="placeholder-rotate" id="placeholder-text">I want to attract love</span>
               </div>
             </div>
-            <input type="email" name="email" class="field" placeholder="Your email" required>
+            <input type="email" name="entry.1714617647" class="field" placeholder="Your email" required>
             <button type="submit" class="btn">Join the Waitlist</button>
             <p class="fine">We'll let you know when it's ready</p>
           </form>
@@ -955,11 +955,24 @@
     document.getElementById('signup-form').addEventListener('submit', function(e) {
       e.preventDefault();
 
-      const sign = document.querySelector('select[name="sign"]').value;
-      renderConstellation(sign);
+      const formData = new FormData(this);
+      const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLScsoCIoWg_4twgo_oyKq6aty6cq2NS68HdHgiZAYTzKO8CJTA/formResponse";
+      fetch(googleFormUrl, {
+          method: 'POST',
+          mode: 'no-cors', // Important: suppresses CORS errors
+          body: formData
+      })
+      .then(() => {
+          const sign = document.querySelector('select[name="entry.172177064"]').value;
+          renderConstellation(sign);
 
-      this.classList.add('hidden');
-      document.getElementById('success').classList.add('show');
+          this.classList.add('hidden');
+          document.getElementById('success').classList.add('show');
+      })
+      .catch((error) => {
+          console.error('Error:', error);
+          alert("Something went wrong.");
+      });
 
       // Here you would normally submit to your form backend
       // fetch(this.action, { method: 'POST', body: new FormData(this) });

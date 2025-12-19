@@ -654,8 +654,8 @@
         <p class="sub">Matched to your chart and what you're ready to manifest.</p>
 
         <div class="cta-card">
-          <form id="signup-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-            <select name="looking-for" class="field select" required>
+          <form id="signup-form" action="docs.google.com" method="POST">
+            <select name="entry.1714770104" class="field select" required>
               <option value="" disabled selected>What are you looking for?</option>
               <option value="tarot">🔮 Tarot Reading</option>
               <option value="energy">✨ Energy Healing</option>
@@ -666,11 +666,11 @@
             <div class="looking-for-wrap">
               <label class="field-label">What do you want help with?</label>
               <div class="input-wrap">
-                <input type="text" name="intention" id="intention" class="field" required>
+                <input type="text" name="entry.253950926" id="intention" class="field" required>
                 <span class="placeholder-rotate" id="placeholder-text">Attracting love</span>
               </div>
             </div>
-            <input type="email" name="email" class="field" placeholder="Your email" required>
+            <input type="email" name="entry.606466716" class="field" placeholder="Your email" required>
             <button type="submit" class="btn">Join the Waitlist</button>
             <p class="fine">We'll match you when we launch</p>
           </form>
@@ -812,17 +812,34 @@
     document.getElementById('signup-form').addEventListener('submit', function(e) {
       e.preventDefault();
 
-      const lookingFor = document.querySelector('select[name="looking-for"]').value;
-      const message = tarotMessages[lookingFor] || defaultMessage;
-      document.getElementById('card-message').innerHTML = message;
+      const formData = new FormData(this);
+      const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLScL4AhfQidG8JrF0fYZf2D1x40gOfqqyYYvCiHR7tHWl9O0EQ/formResponse";
+      fetch(googleFormUrl, {
+          method: 'POST',
+          mode: 'no-cors', // Important: suppresses CORS errors
+          body: formData
+      })
+      .then(() => {
+          // Because 'no-cors' is used, we cannot technically detect a "success" 
+          // status code, but the promise resolves if the request was sent.
+          // alert("Form submitted successfully!");
+          // document.getElementById('myCustomForm').reset();
+          const lookingFor = document.querySelector('select[name="entry.1714770104"]').value;
+          const message = tarotMessages[lookingFor] || defaultMessage;
+          document.getElementById('card-message').innerHTML = message;
 
-      this.classList.add('hidden');
-      document.getElementById('success').classList.add('show');
+          this.classList.add('hidden');
+          document.getElementById('success').classList.add('show');
 
-      // Flip the card after a short delay
-      setTimeout(() => {
-        document.getElementById('tarot-card').classList.add('flipped');
-      }, 300);
+          // Flip the card after a short delay
+          setTimeout(() => {
+            document.getElementById('tarot-card').classList.add('flipped');
+          }, 300);
+      })
+      .catch((error) => {
+          console.error('Error:', error);
+          alert("Something went wrong.");
+      });
 
       // Here you would normally submit to your form backend
       // fetch(this.action, { method: 'POST', body: new FormData(this) });
